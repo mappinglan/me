@@ -1,0 +1,9 @@
+/doc/building.html
+
+hg clone http://hg.openjdk.java.net/jdk/jdk
+
+bash configure
+
+make images
+
+./build/*/images/jdk/bin/java -version

@@ -1,0 +1,65 @@
+wget https://dev.mysql.com/get/Downloads/MySQL-8.0/mysql-boost-8.0.22.tar.gz
+tar -zxvf mysql-boost-8.0.22.tar.gz
+
+apt install build-essential cmake bison libncurses5-dev libssl-dev pkg-config
+
+cmake -DCMAKE_INSTALL_PREFIX=/usr/local/mysql -DMYSQL_DATADIR=/usr/local/mysql/data -DWITH_BOOST=boost -DFORCE_INSOURCE_BUILD=ON
+
+make
+
+make install
+
+//添加用户
+groupadd mysql
+useradd -g mysql mysql
+mkdir -p /usr/local/mysql/data
+chown -R mysql:mysql /usr/local/mysql
+
+//初始化
+sudo /usr/local/mysql/bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/usr/local/mysql/data
+# 这一步会打印输出随机生成的root账号初始密码
+
+//配置
+# 配置my.cnf
+vim /etc/my.cnf
+
+# 然后写入以下内容 
+[client]
+socket = /tmp/mysql.sock
+ 
+[mysqld]
+socket = /tmp/mysql.sock
+basedir = /usr/local/mysql
+datadir = /usr/local/mysql/data
+
+# 配置服务项
+sudo cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
+sudo chmod +x /etc/init.d/mysqld 
+update-rc.d mysqld defaults
+service mysqld start
+
+# 添加环境变量
+sudo vim /etc/profile
+# 最后一行添加
+# MySQL PATH
+export PATH=/usr/local/mysql/bin:$PATH
+
+# 生效
+source /etc/profile
+
+//远程连接
+mysql -u root -p 'MjZlO.kao5Gb'
+
+
+
+# 更新一下用户的密码 
+alter user user() identified by "passwd";
+//ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password'; 
+
+# 刷新权限
+FLUSH PRIVILEGES; 
+
+//管理
+systemctl start mysqld 
+systemctl stop mysqld
+systemctl restart mysqld
