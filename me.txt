@@ -1,0 +1,68 @@
+###
+Dism /Split-Image /ImageFile:F:\install.wim /SWMFile:F:\install.swm /FileSize:2500
+
+HKLM\SYSTEM\CurrentControlSet\Services\PolicyAgent AssumeUDPEncapsulationContextOnSendRule=2
+
+timedatectl set-local-rtc 1 --adjust-system-clock
+
+##jetbrains reset evaluation
+删除C:\Users\wower\AppData\Roaming\JetBrains\IntelliJIdea2021.1\eval下所有文件
+删除C:\Users\wower\AppData\Roaming\JetBrains\IntelliJIdea2021.1\options下other.xml文件
+删除计算机\HKEY_CURRENT_USER\SOFTWARE\JavaSoft\Prefs\jetbrains
+rm ~/.config/JetBrains/IntelliJIdea2021.2/options/other.xml
+rm ~/.config/JetBrains/IntelliJIdea2021.2/eval/*
+rm -rf ~/.java/.userPrefs/prefs.xml
+rm -rf ~/.java/.userPrefs/jetbrains/prefs.xml
+
+##vmware3D加速取消mesa黑名单
+mks.gl.allowBlacklistedDrivers = "TRUE"
+
+##VMware Workstation Pro 16 license keys
+ZF3R0-FHED2-M80TY-8QYGC-NPKYF
+YF390-0HF8P-M81RQ-2DXQE-M2UT6
+ZF71R-DMX85-08DQY-8YMNC-PPHV8
+
+apt-get install mysql-server
+ALTER USER 'root'@'localhost' IDENTIFIED BY '123456';
+CREATE USER 'jeffrey'@'localhost' IDENTIFIED BY 'password';
+update user set Host='%' where User='root';
+flush privileges;
+set global time_zone = '+8:00';
+vi /etc/mysql/mysql.conf.d/mysqld.cnf //在bind-adress = 127.0.0.1前加上#号
+service mysql restart
+
+mkdir /opt/jvm
+tar -zxvf openjdk-16_linux-x64_bin.tar.gz -C /opt/jvm
+vi /etc/profile
+export JAVA_HOME=/opt/jvm/jdk-16
+export PATH=$JAVA_HOME/bin:$PATH
+source /etc/profile
+vi ~/.bashrc
+
+sudo apt install build-essential //Clion toolchain cc c++ make,(Clion,IdeaIU)Ubuntu Software //Rhythmbox
+
+##idea输入法问题解决，在vmoptions添加
+-Drecreate.x11.input.method=true
+
+apt install qemu-guest-agent spice-vdagent
+apt install vim
+apt install vlc
+apt install mpv
+##添加sudo
+sudo adduser me sudo
+##修改系统语言
+dpkg-reconfigure locales
+
+//apt update
+//apt upgrade
+sudo passwd
+su - root
+sudo vi /etc/ssh/sshd_config
+PermitRootLogin yes
+PasswordAuthentication yes
+ClientAliveInterval 30
+ClientAliveCountMax 3
+sudo service sshd restart
+
+##debian/ubuntu l2tp/ipsec GUI客户端
+apt install network-manager-l2tp-gnome
