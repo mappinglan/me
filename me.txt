@@ -66,3 +66,14 @@ sudo service sshd restart
 
 ##debian/ubuntu l2tp/ipsec GUI客户端
 apt install network-manager-l2tp-gnome
+
+#SSH密钥
+ssh-keygen -t ed25519 -C "mappinglan@gmail.com"
+ssh -T git@github.com
+ssh-copy-id root@wower.cool
+#修改内核
+cat /boot/grub/grub.cfg
+vim /etc/default/grub
+GRUB_DEFAULT=0 修改为
+GRUB_DEFAULT="Advanced options for Debian GNU/Linux>Debian GNU/Linux, with Linux 5.10.0-8-amd64"
+update-grub
