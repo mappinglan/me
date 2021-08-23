@@ -43,13 +43,14 @@ sudo apt install build-essential //Clion toolchain cc c++ make,(Clion,IdeaIU)Ubu
 
 ##idea输入法问题解决，在vmoptions添加
 -Drecreate.x11.input.method=true
-
+###
 apt install qemu-guest-agent spice-vdagent
 apt install vim
 apt install vlc
 apt install mpv
 ##添加sudo
 sudo adduser me sudo
+vi /etc/sudoers
 ##修改系统语言
 dpkg-reconfigure locales
 
@@ -64,14 +65,12 @@ ClientAliveInterval 30
 ClientAliveCountMax 3
 sudo service sshd restart
 
-##debian/ubuntu l2tp/ipsec GUI客户端
-apt install network-manager-l2tp-gnome
-
 #SSH密钥
 ssh-keygen -t ed25519 -C "mappinglan@gmail.com"
 ssh -T git@github.com
 ssh-copy-id root@wower.cool
 #修改内核
+apt install linux-image-amd64
 cat /boot/grub/grub.cfg
 vim /etc/default/grub
 GRUB_DEFAULT=0 修改为
