@@ -73,6 +73,11 @@ ps aux | grep ssh
 kill -9 线程号
 eval "$(ssh-agent -s)"
 ssh-add ~/.ssh/myid
+git add *
+git commit -m "m"
+git push
+git pull
+git clone
 
 ssh-copy-id root@wower.cool
 #修改内核
@@ -85,4 +90,3 @@ update-grub
 
 qemu-img convert -f raw -O vmdk openwrt-21.02.0-x86-64-generic-squashfs-combined-efi.img openwrt-21.02.0-x86-64-generic-squashfs-combined-efi.vmdk
 qemu-img convert -f raw -O vmdk openwrt-21.02.0-x86-64-generic-ext4-combined-efi.img openwrt-21.02.0-x86-64-generic-ext4-combined-efi.vmdk
-vi /etc/config/network
