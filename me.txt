@@ -91,5 +91,6 @@ GRUB_DEFAULT=0 修改为
 GRUB_DEFAULT="Advanced options for Debian GNU/Linux>Debian GNU/Linux, with Linux 5.10.0-8-amd64"
 update-grub
 
+apt install virt-manager
 qemu-img convert -f raw -O vmdk openwrt-21.02.0-x86-64-generic-squashfs-combined-efi.img openwrt-21.02.0-x86-64-generic-squashfs-combined-efi.vmdk
 qemu-img convert -f raw -O vmdk openwrt-21.02.0-x86-64-generic-ext4-combined-efi.img openwrt-21.02.0-x86-64-generic-ext4-combined-efi.vmdk
