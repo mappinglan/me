@@ -68,6 +68,10 @@ sudo service sshd restart
 #SSH密钥
 ssh-keygen -t ed25519 -C "mappinglan@gmail.com"
 ssh -T git@github.com
+
+ssh -i .ssh/myid root@wower.cool
+ssh-copy-id -i .ssh/myid root@wower.cool
+scp -i .ssh/myid root@wower.cool:/root/vpnclient.p12 vpnclient.p12
 #windows ssh-agent
 ps aux | grep ssh
 kill -9 线程号
@@ -79,7 +83,6 @@ git push
 git pull
 git clone
 
-ssh-copy-id root@wower.cool
 #修改内核
 apt install linux-image-amd64
 cat /boot/grub/grub.cfg
