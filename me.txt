@@ -69,6 +69,8 @@ sudo service sshd restart
 ssh-keygen -t ed25519 -C "mappinglan@gmail.com"
 ssh -T git@github.com
 
+chmod  400 ~/.ssh/myid
+
 ssh -i .ssh/myid root@wower.cool
 ssh-copy-id -i .ssh/myid root@wower.cool
 scp -i .ssh/myid root@wower.cool:/root/vpnclient.p12 vpnclient.p12
