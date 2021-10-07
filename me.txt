@@ -1,8 +1,6 @@
 ###
 Dism /Split-Image /ImageFile:F:\install.wim /SWMFile:F:\install.swm /FileSize:2500
 
-HKLM\SYSTEM\CurrentControlSet\Services\PolicyAgent AssumeUDPEncapsulationContextOnSendRule=2
-
 timedatectl set-local-rtc 1 --adjust-system-clock
 
 ##jetbrains reset evaluation
@@ -65,6 +63,9 @@ ClientAliveInterval 30
 ClientAliveCountMax 3
 sudo service sshd restart
 
+mkdir .ssh
+cp /home/mappinglan/.ssh/authorized_keys .ssh/authorized_keys
+
 #SSH密钥
 ssh-keygen -t ed25519 -C "mappinglan@gmail.com"
 ssh -T git@github.com
@@ -96,3 +97,45 @@ update-grub
 apt install virt-manager
 qemu-img convert -f raw -O vmdk openwrt-21.02.0-x86-64-generic-squashfs-combined-efi.img openwrt-21.02.0-x86-64-generic-squashfs-combined-efi.vmdk
 qemu-img convert -f raw -O vmdk openwrt-21.02.0-x86-64-generic-ext4-combined-efi.img openwrt-21.02.0-x86-64-generic-ext4-combined-efi.vmdk
+
+#KMS激活Windsows Office
+#https://github.com/Wind4/vlmcsd
+#https://github.com/netnr/kms
+cat /proc/cpuinfo
+wget https://github.com/Wind4/vlmcsd/releases/download/svn1113/binaries.tar.gz
+tar -zxvf binaries.tar.gz
+cp binaries/Linux/intel/static/vlmcsd-x64-musl-static /usr/bin/vlmcsd
+
+vi /lib/systemd/system/vlmcsd.service
+[Unit]
+Description = KMS Server By vlmcsd
+After=network.target
+[Service]
+Type=forking
+ExecStart=/usr/bin/vlmcsd
+ExecStop=/bin/kill -HUP $MAINPID
+PrivateTmp=true
+[Install]
+WantedBy=multi-user.target
+
+systemctl daemon-reload
+systemctl start vlmcsd
+systemctl stop vlmcsd
+systemctl status vlmcsd
+systemctl enable vlmcsd
+
+netstat -tupln |grep 1688
+
+slmgr -skms wower.cool
+slmgr -ipk W269N-WFGWX-YVC9B-4J6C9-T83GX //win10专业版KMS Client Setup Key，VOL版windows,office不需要更改密钥
+slmgr -ato
+Windows+R，输入slmgr.vbs -dlv，查看关于授权的详细信息
+
+#https://docs.microsoft.com/zh-cn/deployoffice/ltsc2021/deploy
+setup /download configuration-Office2021Enterprise.xml
+setup /configure configuration-Office2021Enterprise.xml
+
+cd C:\Program Files\Microsoft Office\Office16
+cscript ospp.vbs /sethst:wower.cool
+cscript ospp.vbs /act
+cscript ospp.vbs /dstatus
