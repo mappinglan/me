@@ -1,5 +1,10 @@
 ###
 Dism /Split-Image /ImageFile:F:\install.wim /SWMFile:F:\install.swm /FileSize:2500
+shell:startup
+
+CMCCAdmin
+aDm8H%MdA
+#移动宽带允许IPv6入站，路由器界面安全-防火墙-取消防攻击保护
 
 timedatectl set-local-rtc 1 --adjust-system-clock
 
@@ -37,18 +42,24 @@ export PATH=$JAVA_HOME/bin:$PATH
 source /etc/profile
 vi ~/.bashrc
 
-sudo apt install build-essential //Clion toolchain cc c++ make,(Clion,IdeaIU)Ubuntu Software //Rhythmbox
-
 ##idea输入法问题解决，在vmoptions添加
 -Drecreate.x11.input.method=true
 ###
-apt install qemu-guest-agent spice-vdagent
+
+sudo apt install build-essential //Clion toolchain cc c++ make,(Clion,IdeaIU)Ubuntu Software //Rhythmbox
+
+apt install openjdk-11-jdk openjdk-11-source
+apt install mariadb-server
 apt install vim
+apt install git
 apt install vlc
 apt install mpv
+
 ##添加sudo
-sudo adduser me sudo
+#sudo adduser me sudo
 vi /etc/sudoers
+me	ALL=(ALL:ALL) ALL
+
 ##修改系统语言
 dpkg-reconfigure locales
 
@@ -68,13 +79,19 @@ cp /home/mappinglan/.ssh/authorized_keys .ssh/authorized_keys
 
 #SSH密钥
 ssh-keygen -t ed25519 -C "mappinglan@gmail.com"
+
 ssh -T git@github.com
 
 chmod  400 ~/.ssh/myid
+ssh-add ~/.ssh/myid
 
 ssh -i .ssh/myid root@wower.cool
 ssh-copy-id -i .ssh/myid root@wower.cool
 scp -i .ssh/myid root@wower.cool:/root/vpnclient.p12 vpnclient.p12
+
+git config --global user.email "mappinglan@gmail.com"
+git config --global user.name "mappinglan"
+
 #windows ssh-agent
 ps aux | grep ssh
 kill -9 线程号
@@ -94,6 +111,7 @@ GRUB_DEFAULT=0 修改为
 GRUB_DEFAULT="Advanced options for Debian GNU/Linux>Debian GNU/Linux, with Linux 5.10.0-8-amd64"
 update-grub
 
+apt install qemu-guest-agent spice-vdagent
 apt install virt-manager
 qemu-img convert -f raw -O vmdk openwrt-21.02.0-x86-64-generic-squashfs-combined-efi.img openwrt-21.02.0-x86-64-generic-squashfs-combined-efi.vmdk
 qemu-img convert -f raw -O vmdk openwrt-21.02.0-x86-64-generic-ext4-combined-efi.img openwrt-21.02.0-x86-64-generic-ext4-combined-efi.vmdk
