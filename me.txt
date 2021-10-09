@@ -1,12 +1,13 @@
 ###
 Dism /Split-Image /ImageFile:F:\install.wim /SWMFile:F:\install.swm /FileSize:2500
-shell:startup
+
+shell:startup //开机运行
 
 CMCCAdmin
 aDm8H%MdA
 #移动宽带允许IPv6入站，路由器界面安全-防火墙-取消防攻击保护
 
-timedatectl set-local-rtc 1 --adjust-system-clock
+timedatectl set-local-rtc 1 --adjust-system-clock //Ubuntu时间与Windows时间不一致问题
 
 ##jetbrains reset evaluation
 删除C:\Users\wower\AppData\Roaming\JetBrains\IntelliJIdea2021.1\eval下所有文件
@@ -17,7 +18,20 @@ rm ~/.config/JetBrains/IntelliJIdea2021.2/eval/*
 rm -rf ~/.java/.userPrefs/prefs.xml
 rm -rf ~/.java/.userPrefs/jetbrains/prefs.xml
 
+##安装VMware Workstation Pro
+su - root
+apt install linux-headers-5.10.0-8-amd64
+sh VMware-Workstation-Full-16.1.2-17966106.x86_64.bundle
+openssl req -new -x509 -newkey rsa:2048 -keyout MOK.priv -outform DER -out MOK.der -nodes -days 36500 -subj "/CN=VMware/"
+/usr/src/linux-headers-`uname -r`/scripts/sign-file sha256 ./MOK.priv ./MOK.der $(modinfo -n vmmon)
+/usr/src/linux-headers-`uname -r`/scripts/sign-file sha256 ./MOK.priv ./MOK.der $(modinfo -n vmnet)
+mokutil --import MOK.der
+reboot
+
+vmware-installer -u vmware-workstation //卸载
+
 ##vmware3D加速取消mesa黑名单
+～/.vmware/preferences //添加如下参数
 mks.gl.allowBlacklistedDrivers = "TRUE"
 
 ##VMware Workstation Pro 16 license keys
@@ -82,6 +96,7 @@ ssh-keygen -t ed25519 -C "mappinglan@gmail.com"
 
 ssh -T git@github.com
 
+#给ssh-agent添加key
 chmod  400 ~/.ssh/myid
 ssh-add ~/.ssh/myid
 
